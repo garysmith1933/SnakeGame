@@ -95,11 +95,39 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void checkApple(){
-
+        if ((x[0] == appleX) && y[0] == appleY) {
+            bodyParts++;
+            applesEaten++;
+            newApple();
+        }
     }
 
     public void checkCollisions() {
+        // if head collides with body
+        for (int i = bodyParts; i > 0; i--) {
+            if ((x[0] == x[i]) && (y[0] == y[i])) {
+                running = false;
+            }
+        }
 
+        //if head touches left border
+        if (x[0] < 0) {
+            running = false;
+        }
+        //right border
+        if (x[0] > SCREEN_WIDTH) {
+            running = false;
+        }
+
+        // top border
+        if (y[0] < 0) {
+            running = false;
+        }
+
+        //bottom border
+        if (y[0] > SCREEN_HEIGHT) {
+            running = false;
+        }
     }
 
     public void gameOver(Graphics g) {
@@ -119,7 +147,28 @@ public class GamePanel extends JPanel implements ActionListener {
     public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e ) {
-
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_LEFT:
+                    if (direction != 'R') {
+                        direction = 'L';
+                    }
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    if (direction != 'L') {
+                        direction = 'R';
+                    }
+                    break;
+                case KeyEvent.VK_UP:
+                    if (direction != 'D') {
+                        direction = 'U';
+                    }
+                    break;
+                case KeyEvent.VK_DOWN:
+                    if (direction != 'U') {
+                        direction = 'D';
+                    }
+                    break;
+            }
         }
     }
 }
